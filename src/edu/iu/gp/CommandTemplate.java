@@ -45,7 +45,7 @@ public class CommandTemplate {
 
     public void createExecutableFile() throws IOException {
 
-        File pbsOutFile = new File(workDir, "command.pbs");
+        File pbsOutFile = new File(workDir, ".command.pbs");
         BufferedWriter pbsOut = new BufferedWriter(new FileWriter(pbsOutFile, true));
 
         pbsOut.write(header + "\n");
@@ -62,8 +62,17 @@ public class CommandTemplate {
     }
 
     public void createEpilogueFile() throws IOException {
+        
+        
+        File pbsDir = new File(workDir, ".pbs");
 
-        File epiOutFile = new File(workDir, ".epilogue.sh");
+        // we need a special directory to store the epilogue.sh and epilogue.pbs
+        //if the directory does not exist, create it
+        if (!pbsDir.exists()) {
+            pbsDir.mkdir();
+        }
+
+        File epiOutFile = new File(pbsDir, ".epilogue.sh");
         epiOutFile.setExecutable(true);
         epiOutFile.setWritable(true);
 

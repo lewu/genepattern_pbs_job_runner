@@ -1,4 +1,4 @@
-package edu.iu.gp;
+package edu.iu.gp; 
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -161,7 +161,8 @@ public class PbsJobRunner implements JobRunner {
                 else if (pbsJobStatus.trim().compareToIgnoreCase("C") == 0) {
 
                     File stderr = drmJobRecord.getStderrFile();
-                    File epilogueOut = new File(workDirPath, ".epilogue.pbs");
+                    File epilogueOut = new File(new File(workDirPath,".pbs"), ".epilogue.pbs");
+                    //File epilogueOut = new File(workDirPath, ".epilogue.pbs");
 
                     // We will need to check whether the epilogue.pbs has 
                     // been written to job working directory.                
@@ -270,7 +271,7 @@ public class PbsJobRunner implements JobRunner {
 
                         // If we can not find both stdout and epilogue.pbs file, 
                         // then there must be something wrong. 
-                        drmJobStatus = new DrmJobStatus.Builder(drmJobId, DrmJobState.FAILED).exitCode(-1).jobStatusMessage("can not find both pbs epilogue outputs, something must be wrong, return " + pbsJobStatus).build();
+                        drmJobStatus = new DrmJobStatus.Builder(drmJobId, DrmJobState.FAILED).exitCode(-1).jobStatusMessage("can not find both pbs epilogue outputs and stderr, something must be wrong, return " + pbsJobStatus).build();
                     }
 
                 } else if (pbsJobStatus.trim().compareToIgnoreCase("Q") == 0) {

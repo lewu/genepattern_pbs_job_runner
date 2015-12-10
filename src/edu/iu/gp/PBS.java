@@ -79,7 +79,7 @@ public class PBS {
             // We will need to check whether the stderr, stdout, and epilogue.pbs have been write to
             // job working directory.
             File stderr = drmJobRecord.getStderrFile();
-            File epilogueOut = new File(workDirPath, "epilogue.pbs");
+            File epilogueOut = new File(new File(workDirPath,".pbs"), ".epilogue.pbs");
             log.error(new String("we have error stream" + errdata));
 
             if (epilogueOut.exists()) {
